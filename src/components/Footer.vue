@@ -1,5 +1,6 @@
 <template>
-  <footer class="relative z-20 w-full bg-white text-black py-16 md:py-24 px-6 md:px-24 overflow-hidden border-t border-black/5">
+  <footer
+    class="relative z-20 w-full bg-white text-black py-16 md:py-24 px-6 md:px-24 overflow-hidden border-t border-black/5">
 
     <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-end gap-12 md:gap-16">
 
@@ -11,12 +12,13 @@
           </span>
         </div>
         <h2
-          class="footer-title text-4xl sm:text-6xl md:text-8xl font-black uppercase tracking-tighter leading-[1.1] md:leading-none font-syne mb-8 md:mb-12">
+          class="footer-title text-3xl sm:text-6xl md:text-8xl font-black uppercase tracking-tighter leading-[1.1] md:leading-none font-syne mb-8 md:mb-12">
           Lass uns <br class="  sm:block"> <span class="text-black/20">zusammen</span> <br> arbeiten
         </h2>
 
         <div class="flex flex-col sm:flex-row flex-wrap gap-4 sm:gap-8 md:gap-16 font-medium text-base md:text-lg">
-          <a href="mailto:hamza-alahmad@web.de" class="group relative h-6 md:h-7 overflow-hidden inline-flex items-start w-max">
+          <a href="mailto:hamza-alahmad@web.de"
+            class="group relative h-6 md:h-7 overflow-hidden inline-flex items-start w-max">
             <div class="flex flex-col transition-transform duration-500 group-hover:-translate-y-1/2">
               <span class="h-6 md:h-7 flex items-center">Email</span>
               <span class="h-6 md:h-7 flex items-center text-indigo-600 italic">Email</span>
@@ -29,7 +31,8 @@
               <span class="h-6 md:h-7 flex items-center text-indigo-600 italic">LinkedIn</span>
             </div>
           </a>
-          <a href="https://github.com/Hamzi125" class="group relative h-6 md:h-7 overflow-hidden inline-flex items-start w-max">
+          <a href="https://github.com/Hamzi125"
+            class="group relative h-6 md:h-7 overflow-hidden inline-flex items-start w-max">
             <div class="flex flex-col transition-transform duration-500 group-hover:-translate-y-1/2">
               <span class="h-6 md:h-7 flex items-center">GitHub</span>
               <span class="h-6 md:h-7 flex items-center text-indigo-600 italic">GitHub</span>
