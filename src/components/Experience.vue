@@ -33,7 +33,7 @@
                 class="text-[10px] md:text-sm font-bold uppercase tracking-widest text-white/90 bg-white/10 px-4 py-2 rounded-full backdrop-blur-md border border-white/10 shadow-sm">{{
                   exp.date }}</span>
               <span class="text-[10px] md:text-sm font-bold uppercase tracking-[0.2em] text-white/50">{{ exp.company
-              }}</span>
+                }}</span>
             </div>
 
             <div class="relative z-10 flex-grow flex flex-col justify-center">
@@ -72,7 +72,7 @@ const experience = [
   {
     date: "2024 – 2026",
     title: "Fachinformatiker (AE)",
-    company: "Umschulung IHK",
+    company: "Ausbildung IHK",
     points: [
       "Fokus auf Softwarearchitektur, Clean Code & moderne Web-Stacks.",
       "Entwicklung komplexer Applikationen und praxisnahe Projektarbeit."
