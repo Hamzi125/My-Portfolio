@@ -51,7 +51,7 @@
         </button>
 
         <div
-          class="flex flex-col items-start md:items-end gap-2 text-[8px] md:text-[10px] uppercase tracking-[0.2em] md:tracking-[0.3em] font-bold text-black/30">
+          class="w-full flex flex-col items-start gap-2 text-[8px] md:text-[10px] uppercase tracking-[0.2em] md:tracking-[0.3em] font-bold text-black/30">
           <span>HS.2026 Portfolio</span>
           <span>Gestaltet mit ❤️ von Hamza Alahmad</span>
         </div>
@@ -59,10 +59,7 @@
 
     </div>
 
-    <!-- Background Decoration -->
-    <div
-      class="absolute -bottom-20 -right-20 w-64 h-64 md:w-96 md:h-96 bg-indigo-500/10 blur-[100px] rounded-full pointer-events-none">
-    </div>
+
   </footer>
 </template>
 
