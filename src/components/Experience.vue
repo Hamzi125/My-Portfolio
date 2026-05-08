@@ -33,7 +33,7 @@
                 class="text-[10px] md:text-sm font-bold uppercase tracking-widest text-white/90 bg-white/10 px-4 py-2 rounded-full backdrop-blur-md border border-white/10 shadow-sm">{{
                   exp.date }}</span>
               <span class="text-[10px] md:text-sm font-bold uppercase tracking-[0.2em] text-white/50">{{ exp.company
-                }}</span>
+              }}</span>
             </div>
 
             <div class="relative z-10 flex-grow flex flex-col justify-center">
@@ -80,7 +80,7 @@ const experience = [
     bgColor: "bg-[#0f0f13]"
   },
   {
-    date: "2023 – 2024",
+    date: "2025 – 2026",
     title: "Softwareentwickler",
     company: "Praktikum",
     points: [
@@ -90,12 +90,12 @@ const experience = [
     bgColor: "bg-[#181824]"
   },
   {
-    date: "Seit 2024",
+    date: "Seit 2023",
     title: "Webentwickler",
     company: "Freelance",
     points: [
       "Entwicklung maßgeschneiderter Web-Lösungen nach exakten Kundenanforderungen.",
-      "Ganzheitliche Projektbetreuung (Full-Service) für höchste Kundenzufriedenheit."
+      "Ganzheitliche Projektbetreuung (Full-Service) für höchste Kundenzufriedenheit"
     ],
     bgColor: "bg-indigo-950"
   }

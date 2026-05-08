@@ -17,7 +17,7 @@
         <div
           class="absolute inset-4 bg-white/10 backdrop-blur-md border border-white/20 rounded-full flex flex-col items-center justify-center shadow-xl">
           <span class="text-xl md:text-2xl">👨‍💻</span>
-          <span class="msg opacity-0 text-[8px] font-black absolute top-25 tracking-tighter text-black">READY TO
+          <span class="msg opacity-0 text-[8px] font-black absolute top-[125%]   tracking-tighter text-black">READY TO
             CODE!</span>
         </div>
       </div>
