@@ -29,11 +29,9 @@
           :aria-label="p.liveAria(project.title)">
           <div class="media-inner live-target" :data-index="index">
             <div class="media-img">
-              <!-- Poster: shown instantly, until the live site has loaded -->
-              <img v-if="project.image" :src="project.image" alt="" :width="project.width" :height="project.height"
-                decoding="async" class="poster" />
-              <div v-else class="poster media-fallback">
-                <span class="text-7xl md:text-8xl" aria-hidden="true">{{ project.emoji }}</span>
+              <!-- Placeholder in the project colour, until the live site has loaded -->
+              <div class="poster media-fallback" aria-hidden="true">
+                <span class="loader"></span>
               </div>
 
               <!-- Live preview: the real deployed site, scaled down. Always up to date. -->
@@ -157,8 +155,6 @@ import { computed, onMounted, onUnmounted, ref } from 'vue';
 import { useI18n } from '../i18n';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import einfachRechnungImg from '../assets/projects/einfachrechnung.webp';
-import drumKitImg from '../assets/projects/drum-kit.webp';
 
 type ProjectKey = 'einfachrechnung' | 'drumkit' | 'weather';
 
@@ -170,10 +166,6 @@ interface ProjectData {
   live: string;
   accent: string;
   code?: string;
-  image?: string;
-  width?: number;
-  height?: number;
-  emoji?: string;
 }
 
 const projectData: ProjectData[] = [
@@ -183,9 +175,6 @@ const projectData: ProjectData[] = [
     stack: ['Vue 3', 'Firebase', 'Tailwind', 'PrimeVue'],
     live: 'https://einfachrechnung.vercel.app',
     accent: '#818cf8',
-    image: einfachRechnungImg,
-    width: 1280,
-    height: 800,
   },
   {
     key: 'drumkit',
@@ -194,18 +183,14 @@ const projectData: ProjectData[] = [
     live: 'https://drum-kits-pied.vercel.app',
     code: 'https://github.com/Hamzi125/Drum-Kits',
     accent: '#fbbf24',
-    image: drumKitImg,
-    width: 1280,
-    height: 731,
   },
   {
     key: 'weather',
     title: 'Weather App',
     stack: ['Vue 3', 'Vite', 'Tailwind', 'Axios'],
-    live: 'https://weather-app-ivory-three-48.vercel.app',
+    live: 'https://hamzi125.github.io/Weather_App/',
     code: 'https://github.com/Hamzi125/Weather_App',
     accent: '#38bdf8',
-    emoji: '🌤️',
   },
 ];
 
@@ -456,8 +441,22 @@ onUnmounted(() => {
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: top;
+}
+
+/* Small spinner in the project colour while the live site loads */
+.loader {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 9999px;
+  border: 2px solid rgba(255, 255, 255, 0.12);
+  border-top-color: var(--accent);
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* Real site rendered at 1440×900 and scaled to the frame (16:10 matches the frame) */
