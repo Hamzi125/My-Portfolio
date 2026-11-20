@@ -7,7 +7,7 @@
     <div class="relative z-10 text-center flex flex-col items-center pointer-events-none">
       <div class="overflow-hidden mb-6">
         <p class="text-[10px] md:text-xs font-bold uppercase tracking-[0.3em] md:tracking-[0.5em] text-black/40 animate-reveal-up">
-          Developer, der immer was Neues dazulernt.
+          {{ t.hero.tagline }}
         </p>
       </div>
 
@@ -34,6 +34,9 @@
 import { onMounted, onUnmounted, ref } from 'vue';
 import { gsap } from 'gsap';
 import InteractiveStickers from './InteractiveStickers.vue';
+import { useI18n } from '../i18n';
+
+const { t } = useI18n();
 
 const root = ref<HTMLElement | null>(null);
 let ctx: gsap.Context | undefined;

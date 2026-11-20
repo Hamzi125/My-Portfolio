@@ -6,14 +6,14 @@
       <div class="panel intro">
         <div class="intro-reveal mb-8 flex items-center gap-4">
           <div class="w-10 h-[1px] bg-indigo-500"></div>
-          <span class="text-[10px] uppercase tracking-[0.6em] text-indigo-400 font-bold">Arbeiten</span>
+          <span class="text-[10px] uppercase tracking-[0.6em] text-indigo-400 font-bold">{{ p.label }}</span>
         </div>
         <h2 class="intro-title font-syne font-black uppercase italic tracking-tighter leading-[0.9]">
-          <span class="block overflow-hidden"><span class="intro-line inline-block">Ausgewählte</span></span>
-          <span class="block overflow-hidden"><span class="intro-line inline-block text-outline">Projekte</span></span>
+          <span class="block overflow-hidden"><span class="intro-line inline-block">{{ p.titleA }}</span></span>
+          <span class="block overflow-hidden"><span class="intro-line inline-block text-outline">{{ p.titleB }}</span></span>
         </h2>
         <div class="intro-reveal scroll-hint mt-10 items-center gap-4 text-xs uppercase tracking-[0.4em] text-white/40 font-bold">
-          Scrollen
+          {{ p.scroll }}
           <span class="hint-line relative block w-16 h-[1px] bg-white/20 overflow-hidden"></span>
         </div>
       </div>
@@ -26,7 +26,7 @@
         <div class="accent-glow" aria-hidden="true"></div>
 
         <a :href="project.live" target="_blank" rel="noopener" class="media group"
-          :aria-label="`${project.title} live ansehen`">
+          :aria-label="p.liveAria(project.title)">
           <div class="media-inner live-target" :data-index="index">
             <div class="media-img">
               <!-- Poster: shown instantly, until the live site has loaded -->
@@ -37,7 +37,7 @@
               </div>
 
               <!-- Live preview: the real deployed site, scaled down. Always up to date. -->
-              <iframe v-if="liveLoaded[index]" :src="project.live" :title="`Live-Vorschau von ${project.title}`"
+              <iframe v-if="liveLoaded[index]" :src="project.live" :title="p.previewTitle(project.title)"
                 class="live-frame" :class="{ 'is-ready': liveReady[index] }" tabindex="-1" aria-hidden="true"
                 sandbox="allow-scripts allow-same-origin" referrerpolicy="no-referrer"
                 @load="liveReady[index] = true"></iframe>
@@ -46,7 +46,7 @@
           <span class="live-indicator" :class="{ 'is-ready': liveReady[index] }">
             <span class="live-dot"></span>Live
           </span>
-          <span class="live-badge">Live<br>ansehen ↗</span>
+          <span class="live-badge">{{ liveBadge[0] }}<br>{{ liveBadge[1] }}</span>
         </a>
 
         <div class="info">
@@ -79,9 +79,9 @@
           </div>
 
           <div class="meta flex gap-6 font-medium text-sm md:text-base">
-            <a :href="project.live" target="_blank" rel="noopener" class="link">Live ansehen <span aria-hidden="true">↗</span></a>
+            <a :href="project.live" target="_blank" rel="noopener" class="link">{{ p.live }} <span aria-hidden="true">↗</span></a>
             <a v-if="project.code" :href="project.code" target="_blank" rel="noopener" class="link text-white/50">
-              Code <span aria-hidden="true">↗</span>
+              {{ p.code }} <span aria-hidden="true">↗</span>
             </a>
           </div>
         </div>
@@ -108,7 +108,7 @@
               </div>
               <div class="ghost-badge">
                 <span class="pulse-dot"></span>
-                In Entwicklung
+                {{ p.coming.badge }}
               </div>
             </div>
           </div>
@@ -117,22 +117,22 @@
         <div class="info">
           <div class="meta flex items-baseline gap-4 mb-5">
             <span class="text-sm font-bold tabular-nums text-purple-400">0{{ projects.length + 1 }}</span>
-            <span class="text-[10px] md:text-xs uppercase tracking-[0.3em] text-white/40 font-bold">Demnächst</span>
+            <span class="text-[10px] md:text-xs uppercase tracking-[0.3em] text-white/40 font-bold">{{ p.coming.type }}</span>
           </div>
-          <h3 class="title font-syne font-black tracking-tighter leading-[0.95] mb-6" aria-label="Bald mehr.">
-            <span v-for="(word, w) in splitWords('Bald mehr.')" :key="w" class="word" aria-hidden="true">
+          <h3 class="title font-syne font-black tracking-tighter leading-[0.95] mb-6" :aria-label="p.coming.title">
+            <span v-for="(word, w) in splitWords(p.coming.title)" :key="w" class="word" aria-hidden="true">
               <span v-for="(char, i) in word" :key="i" class="char-wrap"><span class="char">{{ char }}</span></span>
             </span>
           </h3>
           <p class="meta text-white/60 text-base md:text-lg leading-relaxed font-light">
-            Neue Projekte sind gerade in Arbeit und noch auf dem Weg hierher. Schau bald wieder vorbei.
+            {{ p.coming.text }}
           </p>
         </div>
       </article>
 
       <!-- Outro panel -->
       <div class="panel outro">
-        <p class="text-white/40 text-xs uppercase tracking-[0.4em] font-bold mb-5">Bis dahin: mehr Code auf</p>
+        <p class="text-white/40 text-xs uppercase tracking-[0.4em] font-bold mb-5">{{ p.outroLabel }}</p>
         <a href="https://github.com/Hamzi125" target="_blank" rel="noopener"
           class="outro-link font-syne font-black uppercase italic tracking-tighter leading-none whitespace-nowrap">
           GitHub <span class="inline-block transition-transform duration-500">↗</span>
@@ -143,7 +143,7 @@
     <!-- HUD (horizontal mode only) -->
     <div class="hud" aria-hidden="true">
       <span class="tabular-nums text-xs font-bold tracking-[0.3em] text-white/60">
-        0{{ activeProject }} <span class="text-white/25">/ 0{{ projects.length }}</span>
+        0{{ activeProject }} <span class="text-white/60">/ 0{{ projects.length }}</span>
       </span>
       <div class="flex-1 h-[1px] bg-white/10 overflow-hidden">
         <div ref="progressBar" class="h-full bg-white/70 origin-left scale-x-0"></div>
@@ -153,17 +153,19 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref } from 'vue';
+import { computed, onMounted, onUnmounted, ref } from 'vue';
+import { useI18n } from '../i18n';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import einfachRechnungImg from '../assets/projects/einfachrechnung.webp';
 import drumKitImg from '../assets/projects/drum-kit.webp';
 
-interface Project {
+type ProjectKey = 'einfachrechnung' | 'drumkit' | 'weather';
+
+// Language-independent data. Texts (type, description, highlights) live in i18n.ts.
+interface ProjectData {
+  key: ProjectKey;
   title: string;
-  type: string;
-  description: string;
-  highlights: string[];
   stack: string[];
   live: string;
   accent: string;
@@ -174,17 +176,10 @@ interface Project {
   emoji?: string;
 }
 
-const projects: Project[] = [
+const projectData: ProjectData[] = [
   {
+    key: 'einfachrechnung',
     title: 'EinfachRechnung',
-    type: 'Web-App · Produkt',
-    description:
-      'Rechnungen und Angebote nach deutschem Standard direkt im Browser erstellen – mit Live-Vorschau als A4-Seite und PDF-Download.',
-    highlights: [
-      'Live-Vorschau nach DIN 5008, direkt in der Vorschau bearbeitbar',
-      'E-Rechnung (XRechnung 3.0) selbst als XML erzeugt',
-      'Pflichtangaben-Prüfung nach § 14 UStG, GoBD-konforme Stornos',
-    ],
     stack: ['Vue 3', 'Firebase', 'Tailwind', 'PrimeVue'],
     live: 'https://einfachrechnung.vercel.app',
     accent: '#818cf8',
@@ -193,15 +188,8 @@ const projects: Project[] = [
     height: 800,
   },
   {
+    key: 'drumkit',
     title: 'Drum Kit',
-    type: 'Web Audio',
-    description:
-      'Ein Schlagzeug im Browser – spielbar mit der Tastatur oder per Touch auf Handy und Tablet.',
-    highlights: [
-      'Drei Kits, zwei davon live mit der Web Audio API synthetisiert',
-      'Beats aufnehmen und im Loop abspielen',
-      'Metronom (40–240 BPM) und niedrige Latenz',
-    ],
     stack: ['JavaScript', 'Web Audio API', 'HTML', 'CSS'],
     live: 'https://drum-kits-pied.vercel.app',
     code: 'https://github.com/Hamzi125/Drum-Kits',
@@ -211,11 +199,8 @@ const projects: Project[] = [
     height: 731,
   },
   {
+    key: 'weather',
     title: 'Weather App',
-    type: 'API-Integration',
-    description:
-      'Aktuelles Wetter für jede Stadt – schlankes Interface mit Live-Daten aus der Weatherstack-API.',
-    highlights: ['Echtzeit-Wetterdaten per Städtesuche', 'REST-API-Anbindung mit Axios'],
     stack: ['Vue 3', 'Vite', 'Tailwind', 'Axios'],
     live: 'https://weather-app-ivory-three-48.vercel.app',
     code: 'https://github.com/Hamzi125/Weather_App',
@@ -224,12 +209,17 @@ const projects: Project[] = [
   },
 ];
 
+const { t } = useI18n();
+const p = computed(() => t.value.projects);
+const projects = computed(() => projectData.map((project) => ({ ...project, ...p.value.items[project.key] })));
+const liveBadge = computed(() => p.value.liveBadge.split('|'));
+
 // "Weather App" → [["W","e",...], ["A","p","p"]] so lines only break between words
 const splitWords = (text: string) => text.split(' ').map((word) => Array.from(word));
 
 // Live previews: iframe is only created once its panel comes near the viewport
-const liveLoaded = ref<boolean[]>(projects.map(() => false));
-const liveReady = ref<boolean[]>(projects.map(() => false));
+const liveLoaded = ref<boolean[]>(projectData.map(() => false));
+const liveReady = ref<boolean[]>(projectData.map(() => false));
 const PREVIEW_WIDTH = 1440; // the iframe renders the site at desktop width, then gets scaled down
 
 let lazyObserver: IntersectionObserver | undefined;
@@ -308,56 +298,38 @@ onMounted(() => {
           gsap.set(progressBar.value, { scaleX: self.progress });
           // intro + panels + outro stops; map progress to project 1..n
           const stop = Math.round(self.progress * (panels.length + 1));
-          activeProject.value = gsap.utils.clamp(1, projects.length, stop);
+          activeProject.value = gsap.utils.clamp(1, projectData.length, stop);
         },
       },
     });
 
-    // Intro entrance
-    gsap.from('.intro-line', {
-      yPercent: 110,
-      duration: 1.2,
-      stagger: 0.12,
-      ease: 'expo.out',
-      scrollTrigger: { trigger: root.value, start: 'top 70%' },
-    });
-    gsap.from('.intro-reveal', {
-      opacity: 0,
-      y: 20,
-      duration: 1,
-      stagger: 0.15,
-      delay: 0.3,
-      scrollTrigger: { trigger: root.value, start: 'top 70%' },
-    });
+    // Intro entrance (one trigger for both parts)
+    gsap.timeline({ scrollTrigger: { trigger: root.value, start: 'top 70%' } })
+      .from('.intro-line', { yPercent: 110, duration: 1.2, stagger: 0.12, ease: 'expo.out' })
+      .from('.intro-reveal', { opacity: 0, y: 20, duration: 1, stagger: 0.15 }, 0.3);
 
     panels.forEach((panel) => {
       const inView = { containerAnimation: scroller, trigger: panel };
 
-      // Image: clip-path "window" opens up while the inner image zooms out
-      gsap.fromTo(panel.querySelector('.media-inner'),
-        { clipPath: 'inset(18% 22% 18% 22% round 2.5rem)' },
-        {
-          clipPath: 'inset(0% 0% 0% 0% round 2rem)',
-          ease: 'none',
-          scrollTrigger: { ...inView, start: 'left 95%', end: 'left 25%', scrub: true },
-        });
-      gsap.fromTo(panel.querySelector('.media-img'),
-        { scale: 1.35, xPercent: 8 },
-        {
-          scale: 1,
-          xPercent: -4,
-          ease: 'none',
-          scrollTrigger: { ...inView, start: 'left right', end: 'right left', scrub: true },
-        });
-
-      // Giant background number drifts slower than the panel (parallax)
-      gsap.fromTo(panel.querySelector('.big-num'),
-        { xPercent: 40 },
-        {
-          xPercent: -40,
-          ease: 'none',
-          scrollTrigger: { ...inView, start: 'left right', end: 'right left', scrub: true },
-        });
+      // One scrubbed timeline (= one ScrollTrigger) per panel for all scroll-linked motion.
+      // It runs while the panel travels from entering on the right to leaving on the left.
+      // A panel is one screen wide, so that's 2 screens: 0.5 in timeline time = one screen.
+      gsap.timeline({
+        defaults: { ease: 'none' },
+        scrollTrigger: { ...inView, start: 'left right', end: 'right left', scrub: true },
+      })
+        // Image: clip-path "window" opens up (from "left 95%" to "left 25%")
+        .fromTo(panel.querySelector('.media-inner'),
+          { clipPath: 'inset(18% 22% 18% 22% round 2.5rem)' },
+          { clipPath: 'inset(0% 0% 0% 0% round 2rem)', duration: 0.35 }, 0.025)
+        // ...while the image inside zooms out and drifts
+        .fromTo(panel.querySelector('.media-img'),
+          { scale: 1.35, xPercent: 8 },
+          { scale: 1, xPercent: -4, duration: 1 }, 0)
+        // Giant background number drifts slower than the panel (parallax)
+        .fromTo(panel.querySelector('.big-num'),
+          { xPercent: 40 },
+          { xPercent: -40, duration: 1 }, 0);
 
       // Title letters rise one by one, then the details fade in
       const tl = gsap.timeline({
