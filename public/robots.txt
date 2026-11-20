@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://my-portfolio-red-gamma-46.vercel.app/sitemap.xml
+Sitemap: https://hamzaalahmad.vercel.app/sitemap.xml
