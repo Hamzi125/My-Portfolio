@@ -62,7 +62,7 @@
       @click="handleHire" ref="s2">
       <div
         class="sticker-content px-4 py-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full flex items-center gap-3 shadow-lg relative">
-        <div class="w-1.5 h-1.5 bg-[#1fb401] rounded-full animate-pulse shadow-[0_0_10px_#1fb401]"></div>
+        <div class="glow-dot w-1.5 h-1.5 bg-[#1fb401] rounded-full animate-pulse shadow-[0_0_10px_#1fb401]"></div>
         <span class="text-[10px] font-bold uppercase tracking-widest text-black/60">Available</span>
         <span class="msg opacity-0 text-[8px] font-black absolute -top-6 text-green-600 uppercase tracking-tighter">Hire
           Me!</span>
@@ -85,9 +85,10 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import { gsap } from 'gsap';
-import { Draggable } from 'gsap/all';
+import { Draggable, InertiaPlugin } from 'gsap/all';
 
-gsap.registerPlugin(Draggable);
+// InertiaPlugin is required for `inertia: true` (throw/momentum) to work
+gsap.registerPlugin(Draggable, InertiaPlugin);
 
 const container = ref(null);
 const s1 = ref(null); const s2 = ref(null); const s3 = ref(null);
@@ -126,7 +127,7 @@ const handleCoder = (e: MouseEvent) => {
 const handleHire = (e: MouseEvent) => {
   showMsg(e.currentTarget as HTMLElement);
   createParticles(e.clientX, e.clientY);
-  const glow = (e.currentTarget as HTMLElement).querySelector('.w-1.5');
+  const glow = (e.currentTarget as HTMLElement).querySelector('.glow-dot');
   gsap.to(glow, { scale: 2, duration: 0.4, yoyo: true, repeat: 1 });
 };
 
@@ -166,10 +167,11 @@ onMounted(() => {
       onDragStart: function () { gsap.to(this.target, { scale: 1.05, duration: 0.3 }); },
       onDragEnd: function () { gsap.to(this.target, { scale: 1, duration: 0.3 }); }
     });
-    // Enhanced Soft Floating Animation
+    // Soft floating animation. Uses xPercent/yPercent so it doesn't fight
+    // with Draggable, which controls x/y.
     gsap.to(s, {
-      y: `random(-12, 12)`,
-      x: `random(-8, 8)`,
+      yPercent: `random(-15, 15)`,
+      xPercent: `random(-10, 10)`,
       rotation: `random(-5, 5)`,
       duration: `random(3, 5)`,
       repeat: -1,

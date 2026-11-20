@@ -10,11 +10,6 @@
       class="absolute bottom-1/4 -right-20 w-96 h-96 bg-purple-600/10 rounded-full blur-[120px] pointer-events-none animate-pulse"
       style="animation-delay: 2s;"></div>
 
-    <!-- Noise Texture Overlay -->
-    <div
-      class="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]">
-    </div>
-
     <div class="relative z-10 w-full max-w-2xl md:max-w-6xl mx-auto">
       <div class="mb-10 flex items-center gap-4 group">
         <div class="w-10 h-[1px] bg-indigo-500 group-hover:w-16 transition-all duration-700"></div>
@@ -47,15 +42,14 @@
 
       <div class="max-w-4xl">
         <p
-          class="reveal-p text-lg md:text-3xl text-white/30 leading-[1.5] md:leading-[1.6] font-light tracking-tight break-words">
+          class="reveal-p text-lg md:text-3xl text-white/50 leading-[1.5] md:leading-[1.6] font-light tracking-tight break-words">
           Ich stehe am Anfang einer aufregenden Reise und nutze die Dynamik <span
             class="text-white/80 font-medium border-b border-indigo-500/30">modernster Technologien</span>.
           Durch die Integration von
           <span class="text-indigo-400 italic font-medium">KI-gestützten Workflows</span>
           schaffe ich effiziente und skalierbare Lösungen.
           <br class="hidden md:block mb-6">
-          <span
-            class="reveal-p text-lg md:text-3xl text-white/30 leading-[1.5] md:leading-[1.6] font-light tracking-tight break-words">
+          <span>
             Mein Weg ist geprägt von unstillbarer Neugier
             und dem Drang,
             Innovationen heute schon Realität werden zu lassen.</span>
@@ -66,15 +60,17 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { onMounted, onUnmounted, ref } from 'vue';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-const aboutSection = ref(null);
+const aboutSection = ref<HTMLElement | null>(null);
+let ctx: gsap.Context | undefined;
 
 onMounted(() => {
   gsap.registerPlugin(ScrollTrigger);
 
+  ctx = gsap.context(() => {
   // Create a sequential timeline
   const tl = gsap.timeline({
     scrollTrigger: {
@@ -108,7 +104,10 @@ onMounted(() => {
       duration: 1
     }
   );
+  }, aboutSection.value!);
 });
+
+onUnmounted(() => ctx?.revert());
 </script>
 
 <style scoped>

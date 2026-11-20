@@ -9,18 +9,20 @@ import Lenis from 'lenis'
 
 gsap.registerPlugin(ScrollTrigger)
 
-// Initialize Lenis
-const lenis = new Lenis()
+// Smooth scrolling only for users who haven't asked for reduced motion
+if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  const lenis = new Lenis()
 
-// Synchronize Lenis scrolling with ScrollTrigger
-lenis.on('scroll', ScrollTrigger.update)
+  // Synchronize Lenis scrolling with ScrollTrigger
+  lenis.on('scroll', ScrollTrigger.update)
 
-// Add Lenis to the GSAP ticker
-gsap.ticker.add((time) => {
-  lenis.raf(time * 1000)
-})
+  // Add Lenis to the GSAP ticker
+  gsap.ticker.add((time) => {
+    lenis.raf(time * 1000)
+  })
 
-// Correctly disable lag smoothing for consistent movement
-gsap.ticker.lagSmoothing(0)
+  // Correctly disable lag smoothing for consistent movement
+  gsap.ticker.lagSmoothing(0)
+}
 
 createApp(App).mount('#app')
