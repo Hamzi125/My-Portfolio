@@ -2,7 +2,6 @@
     <Transition name="fade">
         <Preloader v-if="isLoading" @finish="handleFinish" />
         <div v-else class="relative bg-black">
-            <BackgroundBlobs />
             <CustomCursor />
 
             <!-- Section 1: Hero (Sticky) -->
@@ -20,8 +19,8 @@
                 <Experience />
             </section>
 
-            <!-- Section 4: Projects (Sticky - Scrolls over Experience) -->
-            <section class="sticky top-0 h-screen z-30">
+            <!-- Section 4: Projects -->
+            <section class="relative z-30">
                 <ProjectsGrid />
             </section>
 
@@ -41,16 +40,31 @@ import Hero from './components/Hero.vue';
 import About from './components/About.vue';
 import Experience from './components/Experience.vue';
 import ProjectsGrid from './components/ProjectsGrid.vue';
-import BackgroundBlobs from './components/BackgroundBlobs.vue';
 import CustomCursor from './components/CustomCursor.vue';
 import Footer from './components/Footer.vue';
 
 
 
-const isLoading = ref(true);
+const PRELOADER_KEY = 'preloader-seen';
+
+// Show the preloader only once per session, and never for users who prefer reduced motion.
+const shouldShowPreloader = () => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return false;
+    try {
+        return sessionStorage.getItem(PRELOADER_KEY) !== '1';
+    } catch {
+        return true;
+    }
+};
+
+const isLoading = ref(shouldShowPreloader());
 
 const handleFinish = () => {
     isLoading.value = false;
-
+    try {
+        sessionStorage.setItem(PRELOADER_KEY, '1');
+    } catch {
+        // storage unavailable (private mode etc.) — preloader will just show again next time
+    }
 };
 </script>

@@ -12,14 +12,13 @@ import { gsap } from 'gsap';
 const cursor = ref<HTMLElement | null>(null);
 const isHovering = ref(false);
 
+// quickTo reuses one tween instead of creating a new tween on every mousemove
+let xTo: ((value: number) => void) | undefined;
+let yTo: ((value: number) => void) | undefined;
+
 const moveCursor = (e: MouseEvent) => {
-    if (!cursor.value) return;
-    gsap.to(cursor.value, {
-        x: e.clientX - 16,
-        y: e.clientY - 16,
-        duration: 0.5,
-        ease: "power3.out"
-    });
+    xTo?.(e.clientX - 16);
+    yTo?.(e.clientY - 16);
 };
 
 const handleMouseOver = (e: MouseEvent) => {
@@ -33,7 +32,9 @@ const handleMouseOver = (e: MouseEvent) => {
 
 onMounted(() => {
     if (window.matchMedia('(pointer: fine)').matches) {
-        window.addEventListener('mousemove', moveCursor);
+        xTo = gsap.quickTo(cursor.value, 'x', { duration: 0.5, ease: 'power3.out' });
+        yTo = gsap.quickTo(cursor.value, 'y', { duration: 0.5, ease: 'power3.out' });
+        window.addEventListener('mousemove', moveCursor, { passive: true });
         window.addEventListener('mouseover', handleMouseOver);
     }
 });

@@ -1,25 +1,25 @@
 <template>
-  <div class="relative w-full h-screen overflow-hidden bg-Cbrand flex items-center justify-center px-6">
+  <div ref="root" class="relative w-full h-screen overflow-hidden bg-Cbrand flex items-center justify-center px-6">
     <!-- Local Stickers Instance -->
     <InteractiveStickers />
 
     <!-- 3. Main Content -->
     <div class="relative z-10 text-center flex flex-col items-center pointer-events-none">
       <div class="overflow-hidden mb-6">
-        <p class="text-[7px] md:text-xs font-bold uppercase tracking-[0.5em] text-black/30 animate-reveal-up">
+        <p class="text-[10px] md:text-xs font-bold uppercase tracking-[0.3em] md:tracking-[0.5em] text-black/40 animate-reveal-up">
           Developer, der immer was Neues dazulernt.
         </p>
       </div>
 
-      <div class="relative inline-block">
-        <h1 class="text-[45px] md:text-[10rem] font-black uppercase tracking-tighter leading-[0.7] gradient-text pb-2">
+      <h1 class="relative inline-block font-black uppercase tracking-tighter leading-[0.7]">
+        <span class="hero-line block text-[45px] md:text-[10rem] gradient-text pb-2">
           Hamza
-        </h1>
-        <h1
-          class="text-[40px] md:text-[10rem] font-black uppercase tracking-tighter leading-[0.7] text-transparent [-webkit-text-stroke:1px_rgba(168,85,247,0.4)]">
+        </span>
+        <span
+          class="hero-line block text-[40px] md:text-[10rem] text-transparent [-webkit-text-stroke:1px_rgba(168,85,247,0.4)]">
           Alahmad
-        </h1>
-      </div>
+        </span>
+      </h1>
     </div>
 
     <!-- Corner Branding -->
@@ -31,43 +31,43 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { onMounted, onUnmounted, ref } from 'vue';
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import InteractiveStickers from './InteractiveStickers.vue';
 
-const scrollDown = ref<HTMLElement | null>(null);
+const root = ref<HTMLElement | null>(null);
+let ctx: gsap.Context | undefined;
 
 onMounted(() => {
-  gsap.registerPlugin(ScrollTrigger);
+  // Scoped to this component so selectors don't hit elements in other sections
+  ctx = gsap.context(() => {
+    // Add a slight delay to ensure the preloader has fully vanished
+    const tl = gsap.timeline({ delay: 0.5 });
 
-  // Add a slight delay to ensure the preloader has fully vanished
-  const tl = gsap.timeline({ delay: 0.5 });
-
-  tl.from(".animate-reveal-up", {
-    y: 60,
-    opacity: 0,
-    duration: 1.5,
-    ease: "power4.out"
-  })
-    .from(".gradient-text, .text-transparent", {
-      y: 80,
+    tl.from(".animate-reveal-up", {
+      y: 60,
       opacity: 0,
-      skewY: 2,
       duration: 1.5,
-      stagger: 0.15,
-      ease: "expo.out"
-    }, "-=1")
-    .to(scrollDown.value, {
-      opacity: 1,
-      duration: 1,
-      ease: "power2.out"
-    }, "-=0.5");
+      ease: "power4.out"
+    })
+      .from(".hero-line", {
+        y: 80,
+        opacity: 0,
+        skewY: 2,
+        duration: 1.5,
+        stagger: 0.15,
+        ease: "expo.out"
+      }, "-=1");
+  }, root.value!);
 });
+
+onUnmounted(() => ctx?.revert());
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@800&display=swap');
+h1 {
+  font-family: 'Syne', sans-serif;
+}
 
 .gradient-text {
   font-family: 'Syne', sans-serif;

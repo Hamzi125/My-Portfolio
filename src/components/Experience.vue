@@ -1,5 +1,5 @@
 <template>
-  <section
+  <section ref="root"
     class="w-full h-screen px-4 md:px-12 lg:px-24 bg-[#f8f9fc] relative z-10 overflow-hidden flex flex-col justify-center"
     id="experience">
     <!-- Ambient glow -->
@@ -22,7 +22,7 @@
           class="absolute inset-x-0 top-0 w-full exp-card-container will-change-transform" :style="{ zIndex: index }">
 
           <div
-            class="exp-card w-full h-[65vh] md:h-[65vh] flex flex-col justify-between p-6 md:p-14 rounded-[2rem] md:rounded-[3.5rem] border border-white/10 shadow-[0_-10px_50px_rgba(0,0,0,0.15)] relative overflow-hidden origin-top backdrop-blur-2xl"
+            class="exp-card w-full h-[65vh] md:h-[65vh] flex flex-col justify-between p-6 md:p-14 rounded-[2rem] md:rounded-[3.5rem] border border-white/10 shadow-[0_-10px_50px_rgba(0,0,0,0.15)] relative overflow-hidden origin-top"
             :class="exp.bgColor">
 
             <!-- Glass Overlay -->
@@ -64,7 +64,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, onUnmounted } from 'vue';
+import { onMounted, onUnmounted, ref } from 'vue';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -101,11 +101,13 @@ const experience = [
   }
 ];
 
-let ctx: gsap.Context;
+const root = ref<HTMLElement | null>(null);
+let ctx: gsap.Context | undefined;
 
 onMounted(() => {
   gsap.registerPlugin(ScrollTrigger);
 
+  // Scope selectors (e.g. "h2") to this section only
   ctx = gsap.context(() => {
     // Title animation
     gsap.from("h2", {
@@ -129,7 +131,9 @@ onMounted(() => {
     // Create a pinned timeline for the card stacking animation
     const tl = gsap.timeline({
       scrollTrigger: {
-        trigger: "#experience",
+        // Pass the element itself: inside a scoped gsap.context, the selector
+        // "#experience" would only search *inside* the section and find nothing.
+        trigger: root.value,
         start: "top top",
         end: "+=200%", // The user will scroll for 2 screens while the section is pinned
         scrub: 1,
@@ -163,11 +167,11 @@ onMounted(() => {
         y: 0,
         ease: "none"
       }, "card3");
-  });
+  }, root.value!);
 });
 
 onUnmounted(() => {
-  ctx.revert();
+  ctx?.revert();
 });
 </script>
 

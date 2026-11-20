@@ -52,7 +52,7 @@ onMounted(() => {
     // المرحلة الأولى: رسم الخطوط (Stroke Animation)
     tl.fromTo(paths,
         { strokeDasharray: 6000, strokeDashoffset: 6000 },
-        { strokeDashoffset: 0, duration: 2.5, stagger: 0.2, ease: "power2.inOut" }
+        { strokeDashoffset: 0, duration: 1.8, stagger: 0.15, ease: "power2.inOut" }
     );
 
     // المرحلة الثانية: تعبئة اللون (Fill Animation)
