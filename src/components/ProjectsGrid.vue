@@ -188,7 +188,7 @@ const projectData: ProjectData[] = [
     key: 'weather',
     title: 'Weather App',
     stack: ['Vue 3', 'Vite', 'Tailwind', 'Axios'],
-    live: 'https://hamzi125.github.io/Weather_App/',
+    live: 'https://wetter1.vercel.app',
     code: 'https://github.com/Hamzi125/Weather_App',
     accent: '#38bdf8',
   },
