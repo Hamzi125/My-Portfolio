@@ -4,15 +4,15 @@
     id="experience">
     <!-- Ambient glow -->
     <div
-      class="absolute top-0 right-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-indigo-300/30 rounded-full blur-[120px] pointer-events-none">
+      class="absolute top-0 right-0 w-[500px] md:w-[900px] h-[500px] md:h-[900px] -translate-y-1/3 translate-x-1/3 bg-[radial-gradient(circle,rgba(165,180,252,0.35),transparent_65%)] pointer-events-none">
     </div>
 
     <div class="max-w-5xl mx-auto w-full relative h-[85vh] mt-[5vh] flex flex-col">
       <div class="mb-4 md:mb-8 text-center md:text-left flex-shrink-0">
         <span
-          class="text-[10px] md:text-sm uppercase tracking-[0.6em] text-black/30 font-bold block mb-2 md:mb-4">Werdegang</span>
+          class="text-[10px] md:text-sm uppercase tracking-[0.6em] text-black/55 font-bold block mb-2 md:mb-4">{{ t.experience.label }}</span>
         <h2 class="text-4xl md:text-6xl font-black uppercase tracking-tighter text-indigo-400 font-syne italic">
-          Stationen
+          {{ t.experience.title }}
         </h2>
       </div>
 
@@ -30,7 +30,7 @@
 
             <div class="flex justify-between items-start mb-4 md:mb-8 relative z-10">
               <span
-                class="text-[10px] md:text-sm font-bold uppercase tracking-widest text-white/90 bg-white/10 px-4 py-2 rounded-full backdrop-blur-md border border-white/10 shadow-sm">{{
+                class="text-[10px] md:text-sm font-bold uppercase tracking-widest text-white/90 bg-white/10 px-4 py-2 rounded-full border border-white/10 shadow-sm">{{
                   exp.date }}</span>
               <span class="text-[10px] md:text-sm font-bold uppercase tracking-[0.2em] text-white/50">{{ exp.company
               }}</span>
@@ -54,7 +54,7 @@
 
             <!-- Background element for depth -->
             <div
-              class="absolute -bottom-32 -right-32 w-64 h-64 md:w-96 md:h-96 bg-white/5 rounded-full blur-3xl pointer-events-none">
+              class="absolute -bottom-32 -right-32 w-64 h-64 md:w-96 md:h-96 bg-[radial-gradient(circle,rgba(255,255,255,0.06),transparent_70%)] pointer-events-none">
             </div>
           </div>
         </div>
@@ -64,42 +64,18 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref } from 'vue';
+import { computed, onMounted, onUnmounted, ref } from 'vue';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useI18n } from '../i18n';
 
-const experience = [
-  {
-    date: "2024 – 2026",
-    title: "Fachinformatiker (AE)",
-    company: "Ausbildung IHK",
-    points: [
-      "Fokus auf Softwarearchitektur, Clean Code & moderne Web-Stacks.",
-      "Entwicklung komplexer Applikationen und praxisnahe Projektarbeit."
-    ],
-    bgColor: "bg-[#0f0f13]"
-  },
-  {
-    date: "2025 – 2026",
-    title: "Softwareentwickler",
-    company: "Praktikum",
-    points: [
-      "Aktive Mitarbeit in der agilen Softwareentwicklung (Scrum).",
-      "Praktische Erfahrung in Team-Projekten und Versionskontrolle."
-    ],
-    bgColor: "bg-[#181824]"
-  },
-  {
-    date: "Seit 2023",
-    title: "Webentwickler",
-    company: "Freelance",
-    points: [
-      "Entwicklung maßgeschneiderter Web-Lösungen nach exakten Kundenanforderungen.",
-      "Ganzheitliche Projektbetreuung (Full-Service) für höchste Kundenzufriedenheit"
-    ],
-    bgColor: "bg-indigo-950"
-  }
-];
+const { t } = useI18n();
+
+// Texts come from i18n.ts; only the card colours live here
+const BG_COLORS = ['bg-[#0f0f13]', 'bg-[#181824]', 'bg-indigo-950'];
+const experience = computed(() =>
+  t.value.experience.items.map((item, i) => ({ ...item, bgColor: BG_COLORS[i] }))
+);
 
 const root = ref<HTMLElement | null>(null);
 let ctx: gsap.Context | undefined;

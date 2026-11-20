@@ -3,7 +3,9 @@
         <Preloader v-if="isLoading" @finish="handleFinish" />
         <div v-else class="relative bg-black">
             <CustomCursor />
+            <Navbar />
 
+            <main>
             <!-- Section 1: Hero (Sticky) -->
             <section class="sticky top-0  z-0">
                 <Hero />
@@ -14,7 +16,12 @@
                 <About />
             </section>
 
-            <!-- Section 3: Experience (Scrolls over About naturally after GSAP pin) -->
+            <!-- Section 3: Skills / Tech Stack -->
+            <section class="relative z-10">
+                <Skills />
+            </section>
+
+            <!-- Section 4: Experience (Scrolls over About naturally after GSAP pin) -->
             <section class="relative z-20">
                 <Experience />
             </section>
@@ -23,6 +30,7 @@
             <section class="relative z-30">
                 <ProjectsGrid />
             </section>
+            </main>
 
             <!-- Section 5: Footer (Normal scroll at the end) -->
             <section class="relative z-40">
@@ -42,6 +50,8 @@ import Experience from './components/Experience.vue';
 import ProjectsGrid from './components/ProjectsGrid.vue';
 import CustomCursor from './components/CustomCursor.vue';
 import Footer from './components/Footer.vue';
+import Navbar from './components/Navbar.vue';
+import Skills from './components/Skills.vue';
 
 
 

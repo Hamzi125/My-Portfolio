@@ -15,7 +15,7 @@
           </text>
         </svg>
         <div
-          class="absolute inset-4 bg-white/10 backdrop-blur-md border border-white/20 rounded-full flex flex-col items-center justify-center shadow-xl">
+          class="absolute inset-4 bg-white/10 border border-white/20 rounded-full flex flex-col items-center justify-center shadow-xl">
           <span class="text-xl md:text-2xl">👨‍💻</span>
           <span class="msg opacity-0 text-[8px] font-black absolute top-[125%]   tracking-tighter text-black">READY TO
             CODE!</span>
@@ -37,7 +37,7 @@
     <div class="sticker absolute top-[12%] right-[10%] pointer-events-auto cursor-grab active:cursor-grabbing"
       @click="handleStar" ref="s6">
       <div
-        class="sticker-content w-10 h-10 md:w-14 md:h-14 bg-indigo-500/20 backdrop-blur-md border border-indigo-500/30 rounded-full flex items-center justify-center shadow-lg relative">
+        class="sticker-content w-10 h-10 md:w-14 md:h-14 bg-indigo-500/20 border border-indigo-500/30 rounded-full flex items-center justify-center shadow-lg relative">
         <svg class="w-5 h-5 text-indigo-600" viewBox="0 0 24 24" fill="currentColor">
           <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
         </svg>
@@ -50,7 +50,7 @@
     <div class="sticker absolute bottom-[15%] left-[10%] pointer-events-auto cursor-grab active:cursor-grabbing"
       @click="handleHello" ref="s4">
       <div
-        class="sticker-content w-14 h-14 md:w-18 md:h-18 bg-yellow-100/50 backdrop-blur-sm border border-yellow-200/50 rounded-full flex items-center justify-center text-xl md:text-2xl shadow-lg relative wave-anim">
+        class="sticker-content w-14 h-14 md:w-18 md:h-18 bg-yellow-100/50 border border-yellow-200/50 rounded-full flex items-center justify-center text-xl md:text-2xl shadow-lg relative wave-anim">
         👋
         <span
           class="msg opacity-0 text-[10px] font-black absolute -top-6 text-yellow-700 uppercase tracking-tighter">Hello!</span>
@@ -61,7 +61,7 @@
       class="sticker absolute bottom-[15%] left-1/2 -translate-x-1/2 pointer-events-auto cursor-grab active:cursor-grabbing"
       @click="handleHire" ref="s2">
       <div
-        class="sticker-content px-4 py-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full flex items-center gap-3 shadow-lg relative">
+        class="sticker-content px-4 py-2 bg-white/10 border border-white/20 rounded-full flex items-center gap-3 shadow-lg relative">
         <div class="glow-dot w-1.5 h-1.5 bg-[#1fb401] rounded-full animate-pulse shadow-[0_0_10px_#1fb401]"></div>
         <span class="text-[10px] font-bold uppercase tracking-widest text-black/60">Available</span>
         <span class="msg opacity-0 text-[8px] font-black absolute -top-6 text-green-600 uppercase tracking-tighter">Hire
@@ -72,7 +72,7 @@
     <div class="sticker absolute bottom-[15%] right-[10%] pointer-events-auto cursor-grab active:cursor-grabbing"
       @click="handleCoffee" ref="s5">
       <div
-        class="sticker-content p-4 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl shadow-lg flex flex-col items-center gap-1 relative">
+        class="sticker-content p-4 bg-white/10 border border-white/20 rounded-xl shadow-lg flex flex-col items-center gap-1 relative">
         <span class="text-xl">☕</span>
         <span
           class="msg opacity-0 text-[8px] font-black absolute -top-6 text-brown-600 uppercase whitespace-nowrap tracking-tighter">Refilling...</span>
